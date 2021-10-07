@@ -1,0 +1,69 @@
+body {
+    background-color: aquamarine;
+    height: 100vh;
+    font-size: large;
+}
+
+@media screen and (max-width: 900px) {
+    body {
+        font-size: medium;
+    }
+}
+@media screen and (max-width: 600px) {
+    body {
+        font-size: small;
+    }
+}
+
+table {
+    width: 100%;
+    margin: 5px;
+    border-spacing: 0 1px;
+}
+
+table thead {
+    background-color: grey;
+}
+
+table tbody {
+    background-color: rgb(199, 194, 194);
+}
+
+table td,
+table th {
+    min-width: 100px;
+    padding: 3px;
+    border-radius: 3px;
+}
+
+/* table td:nth-child(6) {
+    min-width: 70px;
+    width: 80px;
+} */
+
+.flex-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.btn {
+    background-color: grey;
+    width: 24px;
+    height: 24px;
+    border-radius: 12px;
+    margin: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+th div.btn {
+    background-color: rgb(199, 194, 194);
+}
+
+div.btn img {
+    width: 18px;
+    height: 18px;
+}
+
