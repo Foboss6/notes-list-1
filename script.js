@@ -128,6 +128,13 @@ const archiveNote = (id) => {
     reloadList();
 }
 
+const archiveAllNote = () => {
+    Object.values(noteList).forEach((el) => {
+        archiveNote(el.id);
+    });
+    reloadList();
+}
+
 const handleTableClick = (event) => {
     const id = event.target.id.split("-")[0];
     console.log(id);
@@ -144,7 +151,8 @@ const handleTableClick = (event) => {
                 deleteRowFromTable(el.id);
             });
             break;
-        case "done": archiveNote(id);
+        case "done": archiveNote(id); break;
+        case "doneall": archiveAllNote(); break;
     }
 }
 

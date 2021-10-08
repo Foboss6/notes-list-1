@@ -22,7 +22,7 @@ export let noteList = {
         content: "use CSS Grid in my case",
         created: "07/10/2021",
         dates: "08/10/2021",
-    }
+    },
 }
 
 export const addNote = (note) => {
