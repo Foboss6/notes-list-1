@@ -8,8 +8,6 @@ import { handleTableClick } from "./handlers.js";
 // add eventListere to this row to control "save" and "cancel" buttons (click handler on table is off)
 export const startEdittingNote = (id) => {
     let tr = document.getElementById(`${id}-tr`);
-    const badDate = noteList[id].dates.split("/");
-    const goodDate  = `${badDate[2]}-${badDate[1]}-${badDate[0]}`;
 
     tr.innerHTML = 
     `<td>
@@ -22,7 +20,7 @@ export const startEdittingNote = (id) => {
     <td><input id="edit-name" placeholder="Name" value="${noteList[id].name}"></td>
     <td><input id="edit-content" placeholder="Content" value="${noteList[id].content}"></td>
     <td></td>
-    <td><input id="edit-dates" type="date" value="${goodDate}"></td>
+    <td></td>
     <td class="flex-box">${btnSave(id+"-editsave")+btnCancel(id)}</td>`;
 
     tr.addEventListener("click", handleTableClick);
@@ -39,9 +37,13 @@ export const cancelEdittingNote = () => {
 
 // save editted note to the base, and reload the tables
 export const saveEdittingNote = (id) => {
-    if(!document.getElementById("edit-content").value) {
-        document.getElementById("edit-content").placeholder = "Enter some content";
-        return;
+    try {
+        if(!document.getElementById("edit-content").value) {
+            document.getElementById("edit-content").placeholder = "Enter some content";
+            return;
+        }
+    } catch (er) {
+        console.log(er);
     }
 
     noteList[id] = configureNote(id);

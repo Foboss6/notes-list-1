@@ -45,6 +45,10 @@ section table:nth-child(2) {
     text-align: center;
 }
 
+#table-archive {
+    display: none;
+}
+
 div.btn {
     background-color: grey;
     width: 24px;
