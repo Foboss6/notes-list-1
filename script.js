@@ -1,5 +1,5 @@
-import { noteArchive } from './data.js';
 import { noteList, addNote, deleteNote } from '/data.js';
+import { noteArchive, addArchivedNote } from './data.js';
 import { btnTrash, btnEdit, btnDone } from '/data.js';
 
 const loadDefaultList = () => {
@@ -29,13 +29,17 @@ const loadDefaultList = () => {
     Object.values(noteArchive).forEach((el) => {
         archiveData[el.cathegory].archived++;
     });
-    
-    console.log(archiveData);
 
     Object.values(archiveData).forEach((el) => {
         addTRToArchiveTable(el);
     });
 }
+
+const reloadList = () => {
+    document.querySelectorAll("tbody tr").forEach(el => el.remove());
+
+    loadDefaultList();
+} 
 
 const addTRToArchiveTable = (data) => {
     let tr = document.createElement("tr");
@@ -98,13 +102,16 @@ const addNewNote = () => {
     }
     
     let date = new Date();
-    const dates = document.getElementById("new-dates").value.split("-");
+    const dates = 
+        document.getElementById("new-dates").value 
+            ? document.getElementById("new-dates").value.split("-")
+            : '';
     const note = {
         id : Date.now(),
         cathegory: document.getElementById("new-cathegory").value,
         name: document.getElementById("new-name").value,
         content: document.getElementById("new-content").value,
-        dates: `${dates[2]}/${dates[1]}/${dates[0]}`,
+        dates: dates ? `${dates[2]}/${dates[1]}/${dates[0]}` : '',
         created: `${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`,
     }
 
@@ -115,8 +122,15 @@ const addNewNote = () => {
     deleteRowFromTable("new");
 }
 
+const archiveNote = (id) => {
+    addArchivedNote(noteList[id]);
+    deleteNote(id);
+    reloadList();
+}
+
 const handleTableClick = (event) => {
     const id = event.target.id.split("-")[0];
+    console.log(id);
     switch(event.target.id.split("-")[1]) {
         case "new": addTRInput(); break;
         case "save": addNewNote(); break;
@@ -130,6 +144,7 @@ const handleTableClick = (event) => {
                 deleteRowFromTable(el.id);
             });
             break;
+        case "done": archiveNote(id);
     }
 }
 

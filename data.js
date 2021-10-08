@@ -45,7 +45,14 @@ export let noteArchive = {
         created: "07/10/2021",
         dates: "09/10/2021",
     }
-};
+}
+
+export const addArchivedNote = (note) => {
+    noteArchive = {
+        ...noteArchive,
+        [note.id]: note,
+    }
+}
 
 export const btnDone = (id) => {
     return `<div class="done btn"><img id="${id}-done" src="/icons/check.svg" alt="done"></div>`;
