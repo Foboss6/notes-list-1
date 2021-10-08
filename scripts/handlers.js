@@ -9,7 +9,10 @@ import { noteList } from "./data.js";
 export const handleTableClick = (event) => {
     const id = event.target.id.split("-")[0];
     switch(event.target.id.split("-")[1]) {
-        case "new": addTRInput(); break;
+        case "new": 
+            document.querySelectorAll("table")[0].removeEventListener("click", handleTableClick);
+            addTRInput(); 
+            break;
         case "save": addNewNote(); break;
         case "trash": 
             deleteNote(id); 
@@ -25,7 +28,10 @@ export const handleTableClick = (event) => {
             break;
         case "done": archiveNote(id); break;
         case "doneall": archiveAllNote(); break;
-        case "edit": startEdittingNote(id); break;
+        case "edit": 
+            document.querySelectorAll("table")[0].removeEventListener("click", handleTableClick);
+            startEdittingNote(id); 
+            break;
         case "cancel": cancelEdittingNote(); break;
         case "editsave": saveEdittingNote(id); break;
     }

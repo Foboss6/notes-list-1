@@ -1,4 +1,5 @@
 import { btnDone, btnEdit, btnTrash, btnSave, btnCancel } from "./data.js";
+import { handleTableClick } from "./handlers.js";
 
 export const addTRToArchiveTable = (data) => {
     let tr = document.createElement("tr");
@@ -46,6 +47,7 @@ export const addTRInput = () => {
     <td></td>
     <td><input id="new-dates" type="date"></td>
     <td class="flex-box">${btnSave("new")+btnCancel("cancel")}</td>`;
+    tr.addEventListener("click", handleTableClick);
     
     document.querySelector("table tbody").appendChild(tr);
 }

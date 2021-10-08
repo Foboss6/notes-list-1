@@ -9,4 +9,4 @@ import { handleTableClick } from "./scripts/handlers.js";
 
 loadDefaultList();
 
-document.querySelector("table").addEventListener("click", handleTableClick);
+document.querySelectorAll("table")[0].addEventListener("click", handleTableClick);

@@ -2,6 +2,7 @@ import { noteList } from "./data.js";
 import { btnSave, btnCancel } from "./data.js";
 import { reloadList } from "./loading.js";
 import { configureNote } from "./adding.js";
+import { handleTableClick } from "./handlers.js";
 
 export const startEdittingNote = (id) => {
     let tr = document.getElementById(`${id}-tr`);
@@ -21,9 +22,14 @@ export const startEdittingNote = (id) => {
     <td></td>
     <td><input id="edit-dates" type="date" value="${goodDate}"></td>
     <td class="flex-box">${btnSave(id+"-editsave")+btnCancel(id)}</td>`;
+
+    tr.addEventListener("click", handleTableClick);
 }
 
 export const cancelEdittingNote = () => {
+    document.querySelectorAll("tr").forEach(el => el.removeEventListener("click", handleTableClick));
+    document.querySelectorAll("table")[0].addEventListener("click", handleTableClick);
+
     reloadList();
 }
 
@@ -34,6 +40,10 @@ export const saveEdittingNote = (id) => {
     }
 
     noteList[id] = configureNote(id);
+
+    document.querySelectorAll("tr").forEach(el => el.removeEventListener("click", handleTableClick));
+    document.querySelectorAll("table")[0].addEventListener("click", handleTableClick);
+
 
     reloadList();
 }

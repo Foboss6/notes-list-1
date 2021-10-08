@@ -1,4 +1,5 @@
 import { addNote } from "./data.js";
+import { handleTableClick } from "./handlers.js";
 import { addRowToTable, deleteRowFromTable } from "./tables.js";
 
 export const configureNote = (id) => {
@@ -33,4 +34,8 @@ export const addNewNote = () => {
     addRowToTable(note);
 
     deleteRowFromTable("new");
+
+    document.querySelectorAll("tr").forEach(el => el.removeEventListener("click", handleTableClick));
+    document.querySelectorAll("table")[0].addEventListener("click", handleTableClick);
+
 }
