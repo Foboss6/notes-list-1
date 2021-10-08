@@ -36,7 +36,16 @@ export const deleteNote = (id) => {
     delete noteList[id];
 }
 
-export let noteArchive = {};
+export let noteArchive = {
+    123: {
+        id: 123,
+        cathegory: "Task",
+        name: "Project",
+        content: "fix 2 bugs",
+        created: "07/10/2021",
+        dates: "09/10/2021",
+    }
+};
 
 export const btnDone = (id) => {
     return `<div class="done btn"><img id="${id}-done" src="/icons/check.svg" alt="done"></div>`;
