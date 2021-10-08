@@ -1,11 +1,20 @@
 import { noteList, addNote, deleteNote } from '/data.js';
 import { noteArchive, addArchivedNote } from './data.js';
-import { btnTrash, btnEdit, btnDone } from '/data.js';
+import { btnTrash, btnEdit, btnDone, btnSave, btnCancel } from '/data.js';
+
+
+const sortArrayOfObjects = (arr, fieldName) => {
+    return arr.sort((a, b) => {
+        if(a[fieldName] > b[fieldName]) return 1;
+        if(a[fieldName] < b[fieldName]) return -1;
+        return 0;
+    });
+}
 
 const loadDefaultList = () => {
     let archiveData = {
         'Task': {
-            cathegory: 'Tasck',
+            cathegory: 'Task',
             active: 0,
             archived: 0,
         },
@@ -21,7 +30,7 @@ const loadDefaultList = () => {
         },
     };
 
-    Object.values(noteList).forEach((el) => {
+    sortArrayOfObjects(Object.values(noteList), 'created').forEach((el) => {
         addRowToTable(el);
         archiveData[el.cathegory].active++;
     });
@@ -77,7 +86,7 @@ const addTRInput = () => {
     tr.innerHTML = 
     `<td>
         <select id="new-cathegory">
-            <option>Tasck</option>
+            <option>Task</option>
             <option>Random Thought</option>
             <option>Idea</option>
         </select>
@@ -86,13 +95,28 @@ const addTRInput = () => {
     <td><input id="new-content" placeholder="Content"></td>
     <td></td>
     <td><input id="new-dates" type="date"></td>
-    <td class="flex-box">
-        <div class="flex-box save btn">
-            <img id="save-save" src="/icons/checklist.svg" alt="save" title="Save">
-        </div>
-    </td>`;
+    <td class="flex-box">${btnSave("new")+btnCancel("cancel")}</td>`;
     
     document.querySelector("table tbody").appendChild(tr);
+}
+
+const configureNote = (id) => {
+    const source = id ? "edit" : "new";
+    
+    let date = new Date();
+    const dates = 
+        document.getElementById(source+"-dates").value 
+            ? document.getElementById(source+"-dates").value.split("-")
+            : '';
+
+    return {
+        id : id ? id : Date.now(),
+        cathegory: document.getElementById(source+"-cathegory").value,
+        name: document.getElementById(source+"-name").value,
+        content: document.getElementById(source+"-content").value,
+        dates: dates ? `${dates[2]}/${dates[1]}/${dates[0]}` : '',
+        created: `${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`,
+    }
 }
 
 const addNewNote = () => {
@@ -100,20 +124,8 @@ const addNewNote = () => {
         document.getElementById("new-content").placeholder = "Enter some content";
         return;
     }
-    
-    let date = new Date();
-    const dates = 
-        document.getElementById("new-dates").value 
-            ? document.getElementById("new-dates").value.split("-")
-            : '';
-    const note = {
-        id : Date.now(),
-        cathegory: document.getElementById("new-cathegory").value,
-        name: document.getElementById("new-name").value,
-        content: document.getElementById("new-content").value,
-        dates: dates ? `${dates[2]}/${dates[1]}/${dates[0]}` : '',
-        created: `${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`,
-    }
+
+    const note = configureNote();
 
     addNote(note);
 
@@ -135,24 +147,64 @@ const archiveAllNote = () => {
     reloadList();
 }
 
+const startEdittingNote = (id) => {
+    let tr = document.getElementById(`${id}-tr`);
+    const badDate = noteList[id].dates.split("/");
+    const goodDate  = `${badDate[2]}-${badDate[1]}-${badDate[0]}`;
+    console.log(goodDate);
+    console.log(tr);
+    tr.innerHTML = 
+    `<td>
+        <select id="edit-cathegory" value="${noteList[id].cathegory}">
+            <option>Task</option>
+            <option>Random Thought</option>
+            <option>Idea</option>
+        </select>
+    </td>
+    <td><input id="edit-name" placeholder="Name" value="${noteList[id].name}"></td>
+    <td><input id="edit-content" placeholder="Content" value="${noteList[id].content}"></td>
+    <td></td>
+    <td><input id="edit-dates" type="date" value="${goodDate}"></td>
+    <td class="flex-box">${btnSave(id+"-editsave")+btnCancel(id)}</td>`;
+}
+
+const cancelEdittingNote = () => {
+    reloadList();
+}
+
+const saveEdittingNote = (id) => {
+    if(!document.getElementById("edit-content").value) {
+        document.getElementById("edit-content").placeholder = "Enter some content";
+        return;
+    }
+
+    noteList[id] = configureNote(id);
+
+    reloadList();
+}
+
 const handleTableClick = (event) => {
     const id = event.target.id.split("-")[0];
-    console.log(id);
     switch(event.target.id.split("-")[1]) {
         case "new": addTRInput(); break;
         case "save": addNewNote(); break;
         case "trash": 
             deleteNote(id); 
             deleteRowFromTable(id);
+            reloadList();
             break;
         case "deleteall":
             Object.values(noteList).forEach((el) => {
                 deleteNote(el.id); 
                 deleteRowFromTable(el.id);
             });
+            reloadList();
             break;
         case "done": archiveNote(id); break;
         case "doneall": archiveAllNote(); break;
+        case "edit": startEdittingNote(id); break;
+        case "cancel": cancelEdittingNote(); break;
+        case "editsave": saveEdittingNote(id); break;
     }
 }
 
