@@ -48,7 +48,7 @@ export const addTRInput = () => {
     <td><input id="new-name" placeholder="Name"></td>
     <td><input id="new-content" placeholder="Content"></td>
     <td></td>
-    <td><input id="new-dates" type="date"></td>
+    <td></td>
     <td class="flex-box">${btnSave("new")+btnCancel("cancel")}</td>`;
     tr.addEventListener("click", handleTableClick);
     

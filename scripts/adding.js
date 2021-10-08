@@ -8,18 +8,16 @@ export const configureNote = (id) => {
     const source = id ? "edit" : "new";
     
     let date = new Date();
-    const dates = 
-        document.getElementById(source+"-dates").value 
-            ? document.getElementById(source+"-dates").value.split("-")
-            : '';
+    let dates = [...document.getElementById(source+"-content").value.matchAll(/\d{1,2}\/\d{1,2}\/\d{2,4}/g)];
+    dates = dates.length ? dates.reduce((prev, cur) => prev + ", " + cur) : '';
 
     return {
         id : id ? id : Date.now(),
         cathegory: document.getElementById(source+"-cathegory").value,
         name: document.getElementById(source+"-name").value,
         content: document.getElementById(source+"-content").value,
-        dates: dates ? `${dates[2]}/${dates[1]}/${dates[0]}` : '',
-        created: `${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`,
+        dates: dates,
+        created: `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`,
     }
 }
 
@@ -27,7 +25,7 @@ export const configureNote = (id) => {
 // before adding, check the Content, it must be not empty
 // turn off "click handler" on table row and turn it on to whole table
 export const addNewNote = () => {
-    if(!document.getElementById("new-content").value) {
+    if(document.getElementById("new-content") && !document.getElementById("new-content").value) {
         document.getElementById("new-content").placeholder = "Enter some content";
         return;
     }
