@@ -25,9 +25,13 @@ export const configureNote = (id) => {
 // before adding, check the Content, it must be not empty
 // turn off "click handler" on table row and turn it on to whole table
 export const addNewNote = () => {
-    if(document.getElementById("new-content") && !document.getElementById("new-content").value) {
-        document.getElementById("new-content").placeholder = "Enter some content";
-        return;
+    try {
+        if(!document.getElementById("edit-content").value) {
+            document.getElementById("edit-content").placeholder = "Enter some content";
+            return;
+        }
+    } catch (er) {
+        console.log(er);
     }
 
     const note = configureNote();

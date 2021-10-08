@@ -37,9 +37,13 @@ export const cancelEdittingNote = () => {
 
 // save editted note to the base, and reload the tables
 export const saveEdittingNote = (id) => {
-    if(!document.getElementById("edit-content").value) {
-        document.getElementById("edit-content").placeholder = "Enter some content";
-        return;
+    try {
+        if(!document.getElementById("edit-content").value) {
+            document.getElementById("edit-content").placeholder = "Enter some content";
+            return;
+        }
+    } catch (er) {
+        console.log(er);
     }
 
     noteList[id] = configureNote(id);

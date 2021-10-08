@@ -1,6 +1,6 @@
 import { addTRInput, deleteRowFromTable } from "./tables.js";
 import { addNewNote } from "./adding.js";
-import { deleteNote } from "./data.js";
+import { deleteNote, noteArchive } from "./data.js";
 import { reloadList } from "./loading.js";
 import { archiveNote, archiveAllNote } from "./archiving.js";
 import { startEdittingNote, cancelEdittingNote, saveEdittingNote } from "./editting.js";
@@ -46,5 +46,33 @@ export const handleTableClick = (event) => {
             break;
         case "cancel": cancelEdittingNote(); break;
         case "editsave": saveEdittingNote(id); break;
+    }
+}
+
+export const handleButtonClick = (event) => {
+    const tableArchive = document.getElementById("table-archive");
+    
+    if(tableArchive.style.display === "none") {
+        tableArchive.style.display = "block";
+        Object.values(noteArchive).forEach(data => {
+            let tr = document.createElement("tr");
+            
+            tr.id = `${data.id}-tr`;
+            tr.innerHTML = 
+            `<td>${data.cathegory}</td>
+            <td>${data.name}</td>
+            <td>${data.content}</td>
+            <td>${data.created}</td>
+            <td>${data.dates}</td>`;
+            
+            document.querySelector("#table-archive tbody").appendChild(tr);
+        });
+
+        document.getElementById("btn-show-archive").innerText = "Hide Archive";
+    } else {
+        tableArchive.style.display = "none";
+        document.querySelectorAll("#table-archive tbody tr").forEach(el => el.remove());
+
+        document.getElementById("btn-show-archive").innerText = "Show Archive";
     }
 }
