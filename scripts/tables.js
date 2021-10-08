@@ -1,6 +1,7 @@
 import { btnDone, btnEdit, btnTrash, btnSave, btnCancel } from "./data.js";
 import { handleTableClick } from "./handlers.js";
 
+// create new row for second table
 export const addTRToArchiveTable = (data) => {
     let tr = document.createElement("tr");
     tr.id = `${data.cathegory}`;
@@ -12,6 +13,7 @@ export const addTRToArchiveTable = (data) => {
     document.querySelectorAll("table tbody")[1].appendChild(tr);
 }
 
+// create new row for the first table
 export const addRowToTable = (data) => {
     let tr = document.createElement("tr");
         
@@ -31,6 +33,7 @@ export const deleteRowFromTable = (id) => {
     document.getElementById(`${id}-tr`).remove();
 }
 
+// create a row with inputs for adding new note
 export const addTRInput = () => {
     let tr = document.createElement("tr");
     tr.id = `new-tr`;

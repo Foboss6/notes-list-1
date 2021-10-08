@@ -9,6 +9,8 @@ export const sortArrayOfObjects = (arr, fieldName) => {
     });
 }
 
+// filling tables with notes
+// calculate active and achived notes and show its amount in the second table
 export const loadDefaultList = () => {
     let archiveData = {
         'Task': {
@@ -42,6 +44,7 @@ export const loadDefaultList = () => {
     });
 }
 
+// delete all notes from tables, and fill tables with new data
 export const reloadList = () => {
     document.querySelectorAll("tbody tr").forEach(el => el.remove());
 

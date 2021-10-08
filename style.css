@@ -33,8 +33,12 @@ table tbody tr:nth-child(2n) {
 
 table td,
 table th {
-    min-width: 100px;
     padding: 3px;
+}
+
+table td:nth-child(4),
+table td:nth-child(5) {
+    text-align: center;
 }
 
 section table:nth-child(2) {

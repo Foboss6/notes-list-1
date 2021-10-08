@@ -2,6 +2,8 @@ import { addNote } from "./data.js";
 import { handleTableClick } from "./handlers.js";
 import { addRowToTable, deleteRowFromTable } from "./tables.js";
 
+// return note, that filling by data from inputs
+// if id is define, it means that data goes from edit, if not - from new note
 export const configureNote = (id) => {
     const source = id ? "edit" : "new";
     
@@ -21,6 +23,9 @@ export const configureNote = (id) => {
     }
 }
 
+// add new note to the List and put it into table
+// before adding, check the Content, it must be not empty
+// turn off "click handler" on table row and turn it on to whole table
 export const addNewNote = () => {
     if(!document.getElementById("new-content").value) {
         document.getElementById("new-content").placeholder = "Enter some content";

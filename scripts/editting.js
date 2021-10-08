@@ -4,6 +4,8 @@ import { reloadList } from "./loading.js";
 import { configureNote } from "./adding.js";
 import { handleTableClick } from "./handlers.js";
 
+// create a table row with inputs, which are filled by edit note's data
+// add eventListere to this row to control "save" and "cancel" buttons (click handler on table is off)
 export const startEdittingNote = (id) => {
     let tr = document.getElementById(`${id}-tr`);
     const badDate = noteList[id].dates.split("/");
@@ -26,6 +28,8 @@ export const startEdittingNote = (id) => {
     tr.addEventListener("click", handleTableClick);
 }
 
+// just reload a table to cancel editting
+// switch click handler from a row to a table
 export const cancelEdittingNote = () => {
     document.querySelectorAll("tr").forEach(el => el.removeEventListener("click", handleTableClick));
     document.querySelectorAll("table")[0].addEventListener("click", handleTableClick);
@@ -33,6 +37,7 @@ export const cancelEdittingNote = () => {
     reloadList();
 }
 
+// save editted note to the base, and reload the tables
 export const saveEdittingNote = (id) => {
     if(!document.getElementById("edit-content").value) {
         document.getElementById("edit-content").placeholder = "Enter some content";

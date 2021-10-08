@@ -6,6 +6,18 @@ import { archiveNote, archiveAllNote } from "./archiving.js";
 import { startEdittingNote, cancelEdittingNote, saveEdittingNote } from "./editting.js";
 import { noteList } from "./data.js";
 
+// new - create a new note
+// save - save new note
+// trash - delete selected Note
+// deleteall - delete all notes
+// done - archive selected note
+// doneall - archive all notes
+// edit - edit selected note
+// cancel - cancel creating a new note or editting selected note
+// editsave - save changes of selected note
+// 
+// when editting or creating a new note is start, turn off "table click handler" to prevent
+//      editting (or creating) sevarl notes at once
 export const handleTableClick = (event) => {
     const id = event.target.id.split("-")[0];
     switch(event.target.id.split("-")[1]) {
