@@ -1,6 +1,4 @@
 body {
-    background-color: aquamarine;
-    height: 100vh;
     font-size: large;
 }
 
@@ -29,22 +27,22 @@ table tbody {
     background-color: rgb(199, 194, 194);
 }
 
-table td,
-table th {
-    min-width: 100px;
-    padding: 3px;
-    border-radius: 3px;
+table tbody tr:nth-child(2n) {
+    background-color: rgb(205, 205, 205);
 }
 
-/* table td:nth-child(6) {
-    min-width: 70px;
-    width: 80px;
-} */
+table td,
+table th {
+    padding: 3px;
+}
 
-.flex-box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+table td:nth-child(4),
+table td:nth-child(5) {
+    text-align: center;
+}
+
+section table:nth-child(2) {
+    text-align: center;
 }
 
 div.btn {
@@ -62,8 +60,18 @@ th div.btn {
     background-color: rgb(199, 194, 194);
 }
 
+div.btn:hover {
+    box-shadow: 3px 4px 5px rgba(0, 0, 0, 0.7);
+    transform: scale(1.1);
+}
+
 div.btn img {
     width: 18px;
     height: 18px;
 }
 
+.flex-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
