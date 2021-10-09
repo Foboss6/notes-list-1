@@ -19,6 +19,7 @@ import { noteList } from "./data.js";
 // when editting or creating a new note is start, turn off "table click handler" to prevent
 //      editting (or creating) sevarl notes at once
 export const handleTableClick = (event) => {
+
     const id = event.target.id.split("-")[0];
     switch(event.target.id.split("-")[1]) {
         case "new": 
@@ -53,7 +54,7 @@ export const handleButtonClick = (event) => {
     const tableArchive = document.getElementById("table-archive");
     
     if(tableArchive.style.display === "none") {
-        tableArchive.style.display = "block";
+        tableArchive.style.display = "table";
         Object.values(noteArchive).forEach(data => {
             let tr = document.createElement("tr");
             
