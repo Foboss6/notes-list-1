@@ -8,8 +8,13 @@ export const configureNote = (id) => {
     const source = id ? "edit" : "new";
     
     let date = new Date();
-    let dates = [...document.getElementById(source+"-content").value.matchAll(/\d{1,2}\/\d{1,2}\/\d{2,4}/g)];
-    dates = dates.length ? dates.reduce((prev, cur) => prev + ", " + cur) : '';
+    let dates = [];
+    try {
+    dates = [...document.getElementById(source+"-content").value.matchAll(/\d{1,2}\/\d{1,2}\/\d{2,4}/g)];
+    } catch (er) {
+        if(!er) dates = dates.reduce((prev, cur) => prev + ", " + cur);
+        else dates = '';
+    }
 
     return {
         id : id ? id : Date.now(),
@@ -26,13 +31,11 @@ export const configureNote = (id) => {
 // turn off "click handler" on table row and turn it on to whole table
 export const addNewNote = () => {
     try {
-        if(!document.getElementById("edit-content").value) {
-            document.getElementById("edit-content").placeholder = "Enter some content";
+        if(!document.getElementById("new-content").value) {
+            document.getElementById("new-content").placeholder = "Enter some content";
             return;
         }
-    } catch (er) {
-        console.log(er);
-    }
+    } catch (er) {return}
 
     const note = configureNote();
 
@@ -42,7 +45,8 @@ export const addNewNote = () => {
 
     deleteRowFromTable("new");
 
-    document.querySelectorAll("tr").forEach(el => el.removeEventListener("click", handleTableClick));
+    // document.querySelectorAll("tr").forEach(el => el.removeEventListener("click", handleTableClick));
+    // document.getElementById(`new-tr`).removeEventListener("click", handleTableClick);
     document.querySelectorAll("table")[0].addEventListener("click", handleTableClick);
 
 }

@@ -1,4 +1,4 @@
-import { btnDone, btnEdit, btnTrash, btnSave, btnCancel } from "./data.js";
+import { btnDone, btnEdit, btnTrash, btnSave, btnCancel } from "./buttons.js";
 import { handleTableClick } from "./handlers.js";
 
 // create new row for second table

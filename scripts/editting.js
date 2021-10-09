@@ -1,5 +1,5 @@
 import { noteList } from "./data.js";
-import { btnSave, btnCancel } from "./data.js";
+import { btnSave, btnCancel } from "./buttons.js";
 import { reloadList } from "./loading.js";
 import { configureNote } from "./adding.js";
 import { handleTableClick } from "./handlers.js";
@@ -42,9 +42,7 @@ export const saveEdittingNote = (id) => {
             document.getElementById("edit-content").placeholder = "Enter some content";
             return;
         }
-    } catch (er) {
-        console.log(er);
-    }
+    } catch (er) {return}
 
     noteList[id] = configureNote(id);
 
