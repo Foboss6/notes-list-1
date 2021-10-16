@@ -1,4 +1,4 @@
-#The Notes List
+# The Notes List
 
 The notes list, built with pure HTML, CSS and VanillaJS.
 
